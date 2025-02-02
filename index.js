@@ -23,7 +23,7 @@ function main() {
       - remove [email]: Remove a student by email
       - display: Show all students
       - find [email]: Find a student by email
-      - save: Save the current linked list to the specified file
+      - save [fileName]: Save the current linked list to the specified file
       - load [fileName]: Load a linked list from a file
       - clear: Clear the current linked list
       - q: Quit the terminal
@@ -44,12 +44,14 @@ async function handleCommand(command) {
        *   - Grab the args (code is given)
        *   - Use implemented functions in LinkedList to add the Student, and display the updated LinkedList
        */
-        console.log('Adding student...')
-        const [name, year, email, specialization] = args
-        // --------> WRITE YOUR CODE BELOW
-
-        // --------> WRITE YOUR CODE ABOVE
-        break;
+      console.log('Adding student...')
+      const [name, year, email, specialization] = args
+      // --------> WRITE YOUR CODE BELOW
+      const studentObj = new Student(name, year, email, specialization);
+      studentManagementSystem.addStudent(studentObj);
+      console.log(studentManagementSystem.displayStudents());
+      // --------> WRITE YOUR CODE ABOVE
+      break;
 
     case 'remove':
       /**
@@ -62,7 +64,9 @@ async function handleCommand(command) {
        */
       console.log('Removing student...')
       // --------> WRITE YOUR CODE BELOW
-      
+      const [emailArg] = args;
+      studentManagementSystem.removeStudent(emailArg);
+      console.log(studentManagementSystem.displayStudents());
       // --------> WRITE YOUR CODE ABOVE
       break;
 
@@ -75,7 +79,7 @@ async function handleCommand(command) {
        */
       console.log('Displaying students...')
       // --------> WRITE YOUR CODE BELOW
-
+      console.log(studentManagementSystem.displayStudents());
       // --------> WRITE YOUR CODE ABOVE
       break;
 
@@ -91,7 +95,8 @@ async function handleCommand(command) {
        */
       console.log('Finding student...')
       // --------> WRITE YOUR CODE BELOW
-      
+      const [findEmail] = args;
+      console.log(studentManagementSystem.findStudent(findEmail).getString());
       // --------> WRITE YOUR CODE ABOVE
       break;
 
@@ -106,8 +111,10 @@ async function handleCommand(command) {
        */
       console.log('Saving data...')
       // --------> WRITE YOUR CODE BELOW
-
+      const [saveFileName] = args;
+      studentManagementSystem.saveToJson(saveFileName);
       // --------> WRITE YOUR CODE ABOVE
+      break;
 
     case "load":
       /**
@@ -120,7 +127,9 @@ async function handleCommand(command) {
        */
       console.log('Loading data...')
       // --------> WRITE YOUR CODE BELOW
-
+      const [loadFileName] = args;
+      studentManagementSystem.loadFromJSON(loadFileName);
+      console.log(studentManagementSystem.displayStudents());
       // --------> WRITE YOUR CODE ABOVE
       break;
 
@@ -134,18 +143,19 @@ async function handleCommand(command) {
        */
       console.log('Clearing data...')
       // --------> WRITE YOUR CODE BELOW
-
+      studentManagementSystem.clearStudents();
+      console.log(studentManagementSystem.displayStudents());
       // --------> WRITE YOUR CODE ABOVE
       break;
 
     case 'q':
-        console.log('Exiting...');
-        rl.close();
-        break;
+      console.log('Exiting...');
+      rl.close();
+      break;
 
     default:
-        console.log('Unknown command. Type "help" for a list of commands.');
-        break;
+      console.log('Unknown command. Type "help" for a list of commands.');
+      break;
   }
 }
 
@@ -156,7 +166,7 @@ rl.on('line', async (input) => {
   if (input.trim().toLowerCase() === 'help') {
     main();
   } else {
-      await handleCommand(input);
+    await handleCommand(input);
   }
 });
 rl.on('close', () => {
