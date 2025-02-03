@@ -96,7 +96,14 @@ async function handleCommand(command) {
       console.log('Finding student...')
       // --------> WRITE YOUR CODE BELOW
       const [findEmail] = args;
-      console.log(studentManagementSystem.findStudent(findEmail).getString());
+
+      const returnVariable = studentManagementSystem.findStudent(findEmail);
+      if (returnVariable != -1) {
+        console.log(returnVariable.getString());
+      } else {
+        console.log("student not found");
+      }
+
       // --------> WRITE YOUR CODE ABOVE
       break;
 

@@ -1,5 +1,20 @@
 [
-  "Name: AliceJohnson, Year: 2, Email: alice@example.com, Specialization: computerScience",
-  "Name: BobSmith, Year: 3, Email: bob@example.com, Specialization: Engineering",
-  "Name: CharlieBrown, Year: 4, Email: charlie@example.com, Specialization: Mathematics"
+    {
+        "name": "AliceJohnson",
+        "year": 2,
+        "email": "alice@example.com",
+        "specialization": "computerScience"
+    },
+    {
+        "name": "BobSmith",
+        "year": 3,
+        "email": "bob@example.com",
+        "specialization": "Engineering"
+    },
+    {
+        "name": "CharlieBrown",
+        "year": 4,
+        "email": "charlie@example.com",
+        "specialization": "Mathematics"
+    }
 ]

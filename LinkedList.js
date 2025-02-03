@@ -97,12 +97,13 @@ class LinkedList {
         else {
           previous.next = current.next;
         }
+        this.length--;
       }
 
       previous = current;
       current = current.next;
     }
-    this.length--;
+
   }
 
   /**
@@ -171,10 +172,25 @@ class LinkedList {
     let r = [];
     let current = this.head;
     while (current != null) {
-      r.push(current.data.getName());
+      r.push(current.data);
       current = current.next;
     }
-    r.sort()
+    r.sort((a, b) => {
+      const nameA = a.getName().toUpperCase();
+      const nameB = b.getName().toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    // let i;
+    // for (i=0; i < r.length; i++){
+    //   console.log(r[i].getString());
+    // }
     return r;
   }
 
@@ -196,6 +212,19 @@ class LinkedList {
       }
       current = current.next;
     }
+
+    r.sort((a, b) => {
+      const nameA = a.getName().toUpperCase();
+      const nameB = b.getName().toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
     return r;
   }
 
@@ -213,11 +242,23 @@ class LinkedList {
 
     while (current != null) {
       if (current.data.getYear() >= minYear) {
-        r.push(current.data.getName())
+        r.push(current.data)
       }
       current = current.next;
     }
-    r.sort();
+
+    r.sort((a, b) => {
+      const nameA = a.getName().toUpperCase();
+      const nameB = b.getName().toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
     return r;
   }
 
@@ -229,16 +270,24 @@ class LinkedList {
   async saveToJson(fileName) {
     // TODO
     const fs2 = require('fs');
+
     let current = this.head;
     let studentObjArr = [];
+    let studentRecordObj;
+
     while (current != null) {
-      studentObjArr.push(current.data.getString());
+      studentRecordObj = JSON.parse(JSON.stringify({ name: current.data.getName(), year: current.data.getYear(), email: current.data.getEmail(), specialization: current.data.getSpecialization() }));
+      studentObjArr.push(studentRecordObj);
       current = current.next;
     }
-    const studentStr = JSON.stringify(studentObjArr, null, 2);
-    console.log(studentStr);
 
-    await fs2.writeFile(fileName, studentStr, err => {
+    let i;
+    let studentStr2 = "";
+    let studentObjArr2 = [];
+
+    studentStr2 = JSON.stringify(studentObjArr, null, 4)
+
+    await fs2.writeFile(fileName, studentStr2, err => {
       if (err) {
         console.log(err);
       }
