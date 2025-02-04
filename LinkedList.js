@@ -269,7 +269,7 @@ class LinkedList {
    */
   async saveToJson(fileName) {
     // TODO
-    const fs2 = require('fs');
+    const fs2 = require('fs/promises');
 
     let current = this.head;
     let studentObjArr = [];
@@ -277,6 +277,7 @@ class LinkedList {
 
     while (current != null) {
       studentRecordObj = JSON.parse(JSON.stringify({ name: current.data.getName(), year: current.data.getYear(), email: current.data.getEmail(), specialization: current.data.getSpecialization() }));
+      // studentRecordObj = current.data;
       studentObjArr.push(studentRecordObj);
       current = current.next;
     }
@@ -287,14 +288,13 @@ class LinkedList {
 
     studentStr2 = JSON.stringify(studentObjArr, null, 4)
 
-    await fs2.writeFile(fileName, studentStr2, err => {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        console.log("file written successfully");
-      }
-    })
+    try {
+      await fs2.writeFile(fileName, studentStr2)
+    }  
+    catch (error){
+      console.log('Error writing file:', error);
+    }
+    
   }
 
   /**
@@ -306,24 +306,31 @@ class LinkedList {
    */
   async loadFromJSON(fileName) {
     // TODO
-    const fs1 = require('fs');
-    await fs1.readFile(fileName, 'utf8', (err, fileData) => {
-      if (err) {
-        console.log("error:", err);
-        return;
-      }
-      const obj = JSON.parse(fileData);
-      this.clearStudents();
+    const fs1 = require('fs/promises');
+    // await fs1.readFile(fileName, 'utf8', (err, fileData) => {
+    //   if (err) {
+    //     console.log("error:", err);
+    //     return;
+    //   }
+    let fileData;
+    try {
+      fileData = await fs1.readFile(fileName, 'utf8');
+    }
+    catch (error) {
+      console.log('Error reading file:', error);
+    }
 
-      let i;
-      let studentObj;
+    const obj = JSON.parse(fileData);
+    this.clearStudents();
 
-      for (i = 0; i < obj.length; i++) {
-        studentObj = new Student(obj[i].name, obj[i].year, obj[i].email, obj[i].specialization);
-        this.addStudent(studentObj);
-      }
+    let i;
+    let studentObj;
+    
+    for (i = 0; i < obj.length; i++) {
+      studentObj = new Student(obj[i].name, obj[i].year, obj[i].email, obj[i].specialization);
+      this.addStudent(studentObj);
+    }
 
-    })
   }
 }
 
