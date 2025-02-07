@@ -135,7 +135,7 @@ async function handleCommand(command) {
       console.log('Loading data...')
       // --------> WRITE YOUR CODE BELOW
       const [loadFileName] = args;
-      studentManagementSystem.loadFromJSON(loadFileName);
+      await studentManagementSystem.loadFromJSON(loadFileName);
       console.log(studentManagementSystem.displayStudents());
       // --------> WRITE YOUR CODE ABOVE
       break;

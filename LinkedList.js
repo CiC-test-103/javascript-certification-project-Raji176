@@ -98,11 +98,15 @@ class LinkedList {
           previous.next = current.next;
         }
         this.length--;
+        break;
       }
 
       previous = current;
       current = current.next;
     }
+    if(current == null){
+      console.log("student not found")
+    };
 
   }
 
@@ -282,9 +286,8 @@ class LinkedList {
       current = current.next;
     }
 
-    let i;
+    
     let studentStr2 = "";
-    let studentObjArr2 = [];
 
     studentStr2 = JSON.stringify(studentObjArr, null, 4)
 

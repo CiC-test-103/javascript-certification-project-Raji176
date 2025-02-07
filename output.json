@@ -1,8 +1,25 @@
 [
     {
         "name": "raji",
-        "year": "2",
+        "year": "3",
         "email": "rs.gmail",
         "specialization": "bio"
+    },
+    {
+        "name": "shan",
+        "year": "4",
+        "email": "sh.gmail",
+        "specialization": "math"
+    },
+    {
+        "name": "adhi",
+        "year": "2",
+        "email": "ad.gmail",
+        "specialization": "med"
+    },
+    {
+        "name": "jane",
+        "year": "1",
+        "email": "ja.gmail"
     }
 ]
